@@ -42,31 +42,40 @@ export function Services({ controls }: { controls: any }) {
       variants={container}
       initial="hidden"
       animate={controls}
-      viewport={{ once: true, amount: 0.3 }}
-      className="relative grid grid-cols-4 px-20 py-14 bg-slate-800 overflow-hidden"
+      className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-12 lg:gap-y-0 px-6 py-14 md:px-20 bg-slate-800 overflow-hidden text-white"
     >
-      {/* верхній бордер */}
-      <span className="pointer-events-none absolute top-0 left-1/2 h-px w-4/5 -translate-x-1/2 bg-linear-to-r from-transparent via-white to-transparent" />
-
-      {/* нижній бордер */}
-      <span className="pointer-events-none absolute bottom-0 left-1/2 h-px w-4/5 -translate-x-1/2 bg-linear-to-r from-transparent via-white to-transparent" />
+      {/* Декоративні межі (верх/ніж) */}
+      <span className="pointer-events-none absolute top-0 left-1/2 h-px w-4/5 -translate-x-1/2 bg-linear-to-r from-transparent via-white/30 to-transparent" />
+      <span className="pointer-events-none absolute bottom-0 left-1/2 h-px w-4/5 -translate-x-1/2 bg-linear-to-r from-transparent via-white/30 to-transparent" />
 
       {services.map((s, i) => (
         <motion.div
           key={s.title}
           variants={item}
-          className="relative flex flex-col items-center px-8 text-center"
+          className="relative flex flex-col items-center px-4 md:px-8 text-center group"
         >
+          {/* Вертикальна лінія: тільки для десктопа (lg) */}
           {i !== 0 && (
-            <span className="pointer-events-none absolute left-0 top-1/2 h-11/10 w-px -translate-y-1/2 bg-linear-to-b from-transparent via-white/60 to-transparent" />
+            <span className="hidden lg:block pointer-events-none absolute left-0 top-1/2 h-3/4 w-px -translate-y-1/2 bg-linear-to-b from-transparent via-white/20 to-transparent" />
           )}
 
-          <img
-            className="mb-4 h-40 rounded-4xl hover:scale-105 transition-transform duration-300 ease-in-out cursor-pointer"
-            src={s.icon}
-            alt={s.title}
-          />
-          <p className="font-bold text-2xl cursor-pointer">{s.title}</p>
+          {/* Горизонтальна лінія між елементами: тільки для мобільних */}
+          {i !== 0 && (
+            <span className="lg:hidden pointer-events-none absolute -top-6 left-1/2 h-px w-1/2 -translate-x-1/2 bg-linear-to-r from-transparent via-white/20 to-transparent" />
+          )}
+
+          <div className="hover:scale-105 transition-transform duration-300 ease-in-out cursor-pointer flex flex-col items-center">
+            <div className="relative mb-4">
+              {/* Ефект світіння при наведенні */}
+              <div className="absolute inset-0 bg-blue-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <img
+                className="relative h-32 w-32 md:h-40 md:w-40 rounded-3xl object-cover shadow-lg"
+                src={s.icon}
+                alt={s.title}
+              />
+            </div>
+            <p className="font-bold text-xl md:text-2xl">{s.title}</p>
+          </div>
         </motion.div>
       ))}
     </motion.section>
