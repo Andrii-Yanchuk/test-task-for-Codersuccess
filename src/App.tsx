@@ -20,7 +20,7 @@ function App() {
 
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <div className="max-w-7xl w-full px-6">
+      <div className="max-w-7xl w-full md:px-6">
         <Header />
         <Hero textControls={textControls} imageControls={imageControls} />
         <Services controls={servicesControls} />
